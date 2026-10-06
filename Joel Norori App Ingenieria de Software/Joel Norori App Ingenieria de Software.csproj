@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Joel_Norori_App_Ingenieria_de_Software</RootNamespace>
+    <UserSecretsId>eca97f60-de82-431f-907b-8be0febb24a3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

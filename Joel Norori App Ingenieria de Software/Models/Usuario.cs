@@ -16,7 +16,7 @@
         public int RolId { get; set; }
         public virtual Rol Role { get; set; }
 
-        public ICollection<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+        public ICollection<UsuarioPermiso> usuarioPermisos { get; set; } = new List<UsuarioPermiso>();
 
 
 

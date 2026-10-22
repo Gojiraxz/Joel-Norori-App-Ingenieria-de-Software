@@ -3,8 +3,8 @@
     public class Permiso
     {
         public int Id { get; set; }
-        public string Nombre { get; set; }
-        public string? Descripcion { get; set; }
+        public string Name { get; set; }
+        public string? DescriptionS { get; set; }
 
         public ICollection<UsuarioPermiso> UsuarioPermisos { get; set; } = new List<UsuarioPermiso>();
         public ICollection<RolePermiso> RolePermisos { get; set; } = new List<RolePermiso>();

@@ -3,7 +3,7 @@
     public class Rol
     {
         public int Id { get; set; }
-        public string Descripcion { get; set; }=string.Empty;
+        public string Name { get; set; }=string.Empty;
         public ICollection<Usuario> usuarios{ get; set; } = [];
         public ICollection<RolePermiso> rolePermisos { get; set; } = [];
     }

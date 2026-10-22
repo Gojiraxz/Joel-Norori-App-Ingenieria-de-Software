@@ -11,7 +11,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Mapping
                 .ForMember(d => d.RefreshToken, opt => opt.Ignore())
                 .ForMember(d => d.ExpireAt, opt => opt.Ignore());
 
-            CreateMap<RgisterRequestDto, Usuario>()
+            CreateMap<RegisterRequestDto, Usuario>()
                 .ForMember(d => d.Password, opt => opt.Ignore())
                 .ForMember(d => d.EmailConfirmed, opt => opt.MapFrom(src => false))
                 .ForMember(d => d.EmailReConfirmToken, opt => opt.Ignore())

@@ -56,23 +56,30 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
                 "descripcion" => orderDir == "desc" ? query.OrderByDescending(c => c.Descripcion) : query.OrderBy(c => c.Descripcion),
                 "totalestudiantes" => orderDir ? == "desc" ?
                 query.OrderByDescending(c => c.Descripcion) : query.OrderBy(c => c.Estudiantes.Count),
-                "id"=> orderDir == "desc" ? query.OrderByDescending(c => c.Id) : query.OrderBy(c => c.Id),
-                _ => orderDir=="desc"? query.OrderByDescending(c=>c.Nombre):query.OrderBy(c =>c.Nombre)
+                "id" => orderDir == "desc" ? query.OrderByDescending(c => c.Id) : query.OrderBy(c => c.Id),
+                _ => orderDir == "desc" ? query.OrderByDescending(c => c.Nombre) : query.OrderBy(c => c.Nombre)
 
 
 
             };
 
-            var data=await query
+            var data = await query
                 .Skip(request.Start)
-                .Take(request.Length>0?request.Length:10)
-                .Select(c=> new CursoTableDto
+                .Take(request.Length > 0 ? request.Length : 10)
+                .Select(c => new CursoTableDto
                 {
                     Id = c.Id,
                     Nombre = c.Nombre,
                     Descripcion = c.Descripcion
                     TotalEstudiantes = c.Estudiantes.Count
                 }).ToListAsync();
+            return new DataTableResponseDto<CursoTableDto>
+            {
+                Draw = request.Draw,
+                RecordsTotal = recordsTotal,
+                RecordsTotalFiltered = recordsFiltered
+                Data = data
+            };
         }
 
         public async Task<Curso?> GetByIdAsync(int id)

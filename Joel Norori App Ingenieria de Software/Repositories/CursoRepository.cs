@@ -42,7 +42,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
             if (!string.IsNullOrWhiteSpace(search))
             {
                 query = query.Where(c => c.Nombre.Contains(search)
-                || (c.descripcion != null && c.Descripcion.Contains(search)
+                || (c.Descripcion != null && c.Descripcion.Contains(search)
                 ));
 
             }
@@ -54,8 +54,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
             query = columnName.ToLowerInvariant() switch
             {
                 "descripcion" => orderDir == "desc" ? query.OrderByDescending(c => c.Descripcion) : query.OrderBy(c => c.Descripcion),
-                "totalestudiantes" => orderDir ? == "desc" ?
-                query.OrderByDescending(c => c.Descripcion) : query.OrderBy(c => c.Estudiantes.Count),
+                "totalestudiantes" => orderDir  == "desc" ? query.OrderByDescending(c => c.Descripcion) : query.OrderBy(c => c.Estudiantes.Count),
                 "id" => orderDir == "desc" ? query.OrderByDescending(c => c.Id) : query.OrderBy(c => c.Id),
                 _ => orderDir == "desc" ? query.OrderByDescending(c => c.Nombre) : query.OrderBy(c => c.Nombre)
 
@@ -70,14 +69,14 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
                 {
                     Id = c.Id,
                     Nombre = c.Nombre,
-                    Descripcion = c.Descripcion
+                    Descripcion = c.Descripcion,
                     TotalEstudiantes = c.Estudiantes.Count
                 }).ToListAsync();
             return new DataTableResponseDto<CursoTableDto>
             {
                 Draw = request.Draw,
                 RecordsTotal = recordsTotal,
-                RecordsTotalFiltered = recordsFiltered
+                RecordsTotalFiltered = recordsFiltered,
                 Data = data
             };
         }

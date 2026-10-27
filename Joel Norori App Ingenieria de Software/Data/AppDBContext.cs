@@ -38,7 +38,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Data
             modelBuilder.Entity<UsuarioPermiso>()
                 .HasOne(up => up.Permiso)
                 .WithMany(p => p.UsuarioPermisos)
-                .HasForeignKey(up => up.permisoId)
+                .HasForeignKey(up => up.PermisoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
            modelBuilder.Entity<Estudiante>()

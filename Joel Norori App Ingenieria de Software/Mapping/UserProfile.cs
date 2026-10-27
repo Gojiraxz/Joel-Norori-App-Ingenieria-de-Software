@@ -21,10 +21,6 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Mapping
                 .ForMember(d => d.Role, opt => opt.Ignore());
 
 
-
-
-
-
         }
 
     }

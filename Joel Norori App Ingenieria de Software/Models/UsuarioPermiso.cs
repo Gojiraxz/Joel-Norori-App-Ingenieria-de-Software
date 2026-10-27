@@ -4,7 +4,7 @@
     {
         public int usuarioId { get; set; }
         public virtual Usuario Usuario { get; set; } = null!;
-        public int permisoId { get; set; }
+        public int PermisoId { get; set; }
         public virtual Permiso Permiso { get; set; } = null!;
         public bool IsGranted { get; set; } = false;
     }

@@ -1,12 +1,8 @@
-﻿using Joel_Norori_App_Ingenieria_de_Software.Data;
+﻿
+using Joel_Norori_App_Ingenieria_de_Software.Data;
 using Joel_Norori_App_Ingenieria_de_Software.DTOS;
 using Joel_Norori_App_Ingenieria_de_Software.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
 {
@@ -22,72 +18,116 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
         public async Task<bool> DeleteEstudiante(int id)
         {
             var estudiante = await context.estudiantes.FindAsync(id);
-            if (estudiante == null) return false;
+
+            if (estudiante == null)
+                return false;
 
             context.estudiantes.Remove(estudiante);
             await context.SaveChangesAsync();
+
             return true;
         }
 
         public async Task<bool> EmailExistsAsync(string email, int? excludeId = null)
         {
-            return await context.estudiantes.AnyAsync(e => e.Email == email && (!excludeId.HasValue || e.Id != excludeId.Value));
+            return await context.estudiantes.AnyAsync(e =>
+                e.Email == email &&
+                (!excludeId.HasValue || e.Id != excludeId.Value));
         }
 
-        public async Task<Estudiante> GetByIdAsync(int id)
+        public async Task<List<EstudianteTableDto>> GetAllAsync()
+        {
+            return await context.estudiantes
+                .Include(e => e.Curso)
+                .Select(e => new EstudianteTableDto
+                {
+                    Id = e.Id,
+                    Nombre = e.Nombre,
+                    Apellido = e.Apellido,
+                    Email = e.Email,
+                    CursoId = e.CursoId,
+                    CursoNombre = e.Curso.Nombre
+                })
+                .ToListAsync();
+        }
+
+        public async Task<Estudiante?> GetByIdAsync(int id)
         {
             return await context.estudiantes
                 .Include(e => e.Curso)
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
 
-        public async Task<List<DataTableResponseDto<EstudianteTableDto>>> GetPagedAsync(DatoaTablesRequestDto request)
+        public async Task<DataTableResponseDto<EstudianteTableDto>> GetPagedAsync(
+            DatoaTablesRequestDto request)
         {
             var query = context.estudiantes
                 .Include(e => e.Curso)
                 .AsQueryable();
+
             var recordsTotal = await query.CountAsync();
+
             var search = request.Search?.Value?.Trim();
+
             if (!string.IsNullOrWhiteSpace(search))
             {
-                query = query.Where(e => e.Nombre.Contains(search)
-                || e.Apellido.Contains(search) || 
-                   e.Email.Contains(search) ||
-                   e.Curso.Nombre.Contains(search));
-
+                query = query.Where(e =>
+                    e.Nombre.Contains(search) ||
+                    e.Apellido.Contains(search) ||
+                    e.Email.Contains(search) ||
+                    e.Curso.Nombre.Contains(search));
             }
+
             var recordsFiltered = await query.CountAsync();
+
             var orderColumn = request.Order.FirstOrDefault()?.Column ?? 0;
             var orderDir = request.Order.FirstOrDefault()?.Dir ?? "asc";
-            var columnName = request.Columns.ElementAtOrDefault(orderColumn)?.Data ?? "nombre";
+
+            var columnName = request.Columns
+                .ElementAtOrDefault(orderColumn)?.Data ?? "nombre";
 
             query = columnName.ToLowerInvariant() switch
             {
-                "apellido" => orderDir == "desc" ? query.OrderByDescending(e => e.Apellido) : query.OrderBy(e => e.Apellido),
-                "email" => orderDir == "desc" ? query.OrderByDescending(e => e.Email) : query.OrderBy(e => e.Email),
-                "curso" => orderDir == "desc" ? query.OrderByDescending(e => e.Curso.Nombre) : query.OrderBy(e => e.Curso.Nombre),
-                "CursoNombre" => orderDir == "desc" ? query.OrderByDescending(e => e.Curso.Nombre) : query.OrderBy(e => e.Curso.Nombre),
-                "Id" => orderDir == "desc" ? query.OrderByDescending(e => e.Id) : query.OrderBy(e => e.Id),
-                _ => orderDir == "desc" ? query.OrderByDescending(e => e.Nombre) : query.OrderBy(e => e.Nombre)
+                "apellido" => orderDir == "desc"
+                    ? query.OrderByDescending(e => e.Apellido)
+                    : query.OrderBy(e => e.Apellido),
 
+                "email" => orderDir == "desc"
+                    ? query.OrderByDescending(e => e.Email)
+                    : query.OrderBy(e => e.Email),
 
+                "curso" or "curs nombre" or "curs onombre" or "curs nombre" =>
+                    orderDir == "desc"
+                        ? query.OrderByDescending(e => e.Curso.Nombre)
+                        : query.OrderBy(e => e.Curso.Nombre),
 
+                "cursoNombre" => orderDir == "desc"
+                    ? query.OrderByDescending(e => e.Curso.Nombre)
+                    : query.OrderBy(e => e.Curso.Nombre),
+
+                "id" => orderDir == "desc"
+                    ? query.OrderByDescending(e => e.Id)
+                    : query.OrderBy(e => e.Id),
+
+                _ => orderDir == "desc"
+                    ? query.OrderByDescending(e => e.Nombre)
+                    : query.OrderBy(e => e.Nombre)
             };
 
             var data = await query
                 .Skip(request.Start)
                 .Take(request.Length > 0 ? request.Length : 10)
-                .Select(c => new EstudianteTableDto
+                .Select(e => new EstudianteTableDto
                 {
-                    Id = c.Id,
-                    Nombre = c.Nombre,
-                    Apellido = c.Apellido,
-                    Email = c.Email,
-                    CursoId = c.CursoId,
-                    CursoNombre = c.Curso.Nombre
-                    
-                    
-                }).ToListAsync();
+                    Id = e.Id,
+                    Nombre = e.Nombre,
+                    Apellido = e.Apellido,
+                    Email = e.Email,
+                    CursoId = e.CursoId,
+                    CursoNombre = e.Curso.Nombre
+                })
+                .ToListAsync();
+
             return new DataTableResponseDto<EstudianteTableDto>
             {
                 Draw = request.Draw,
@@ -101,6 +141,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
         {
             context.estudiantes.Update(estudiante);
             await context.SaveChangesAsync();
+
             return true;
         }
     }

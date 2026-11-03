@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Joel_Norori_App_Ingenieria_de_Software.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.Options;
+using System;
+
 
 namespace Joel_Norori_App_Ingenieria_de_Software.Authorization
 {

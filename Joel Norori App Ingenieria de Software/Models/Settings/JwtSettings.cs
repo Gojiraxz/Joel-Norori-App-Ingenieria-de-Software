@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace JwtSettings
+namespace JoelNororiAppIngenieriaDeSoftware.Models.Settings
 {
 	public class JwtSettings
 	{

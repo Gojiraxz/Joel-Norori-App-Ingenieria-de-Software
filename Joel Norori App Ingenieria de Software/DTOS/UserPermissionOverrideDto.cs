@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Joel_Norori_App_Ingenieria_de_Software.DTOS
 {
-    public class UserPermissionOverride
+    public class UserPermissionOverrideDto
     {
         public int PermissionId { get; set; }
         public string PermissionName { get; set; } = string.Empty;

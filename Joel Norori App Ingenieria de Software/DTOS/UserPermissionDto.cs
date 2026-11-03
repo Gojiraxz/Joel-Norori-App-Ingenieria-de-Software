@@ -12,7 +12,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.DTOS
         public string Username { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
         public string RolId { get; set; }
-        public List<UserPermissionOverride> EffectivePermission { get; set; } = [];
-        public List<UserPermissionOverride> DirectPermission { get; set; } = [];
+        public List<UserPermissionOverrideDto> EffectivePermission { get; set; } = [];
+        public List<UserPermissionOverrideDto> DirectPermission { get; set; } = [];
     }
 }

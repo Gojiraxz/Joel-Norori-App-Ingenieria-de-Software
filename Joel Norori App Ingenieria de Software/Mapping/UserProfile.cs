@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Joel_Norori_App_Ingenieria_de_Software.DTOS;
 using Joel_Norori_App_Ingenieria_de_Software.Models;
 namespace Joel_Norori_App_Ingenieria_de_Software.Mapping
 {
@@ -6,12 +7,12 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Mapping
     {
         public UserProfile()
         {
-            CreateMap<Usuario, LoginReponseDto>()
+            CreateMap<Usuario, LoginResponseDto>()
                 .ForMember(d => d.AccessToken, opt => opt.Ignore())
                 .ForMember(d => d.RefreshToken, opt => opt.Ignore())
-                .ForMember(d => d.ExpireAt, opt => opt.Ignore());
+                .ForMember(d => d.ExpiresAt, opt => opt.Ignore());
 
-            CreateMap<RegisterRequestDto, Usuario>()
+            CreateMap<RegisterDto, Usuario>()
                 .ForMember(d => d.Password, opt => opt.Ignore())
                 .ForMember(d => d.EmailConfirmed, opt => opt.MapFrom(src => false))
                 .ForMember(d => d.EmailReConfirmToken, opt => opt.Ignore())

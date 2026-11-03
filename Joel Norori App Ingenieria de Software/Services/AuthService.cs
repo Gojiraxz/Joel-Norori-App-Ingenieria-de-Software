@@ -74,8 +74,8 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Services
 
         public async Task<LoginResponseDto?> RefreshAccessTokenAsync(string refreshToken)
         {
-            var user = _userRepo.GetUsuarioByRefreshTokenAsync(refreshToken);
-           if(user == null || user.RefrshTokenExpiryTime < DateTime.UtcNow)
+            var user = await _userRepo.GetUsuarioByRefreshTokenAsync(refreshToken);
+           if(user == null || user.RefreshTokenExpiryTime < DateTime.UtcNow)
                 return null;
             var newAccessToken = _tokenService.GenerateAccessToken(user);
             var newRefreshToken = _tokenService.GenerateRefreshToken();
@@ -86,7 +86,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Services
                 AccessToken = newAccessToken,
                 RefreshToken = newRefreshToken,
                 ExpiresAt = DateTime.UtcNow.AddMinutes(15),
-                RefreshTokenExpiresAt = user.RefreshTokenExpireTime
+                RefreshTokenExpiresAt = user.RefreshTokenExpiryTime ?? DateTime.UtcNow.AddDays(7)
             };
 
 

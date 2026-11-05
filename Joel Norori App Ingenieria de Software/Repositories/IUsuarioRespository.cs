@@ -11,7 +11,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
         bool ValidatePassword(Usuario usuario, string password);
         Task SaveAsync();
         Task<Usuario?> GetUsuarioByRefreshTokenAsync(string refreshToken);
-        Task<bool> AssingPermissionToUsuarioAsync(int usuarioId, int permissionId);
+        Task<bool> AssingPermissionToUsuarioAsync(int usuarioId, int permissionId, bool isGranted);
         Task<bool> RemovePermissionFromUsuarioAsync(int usuarioId, int permissionId);
         Task<bool> UpdateUsuarioRolAsync(int usuarioId , int roleId);
         Task<IReadOnlyList<Usuario>> GetAllUsuarioAsync();

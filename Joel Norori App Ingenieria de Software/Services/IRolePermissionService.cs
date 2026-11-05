@@ -11,10 +11,10 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Services
     {
         Task<IReadOnlyList<PermissionDto>> GetAllPermissionsAsync();
         Task<IReadOnlyList<RoleWithPermissionDto>> GetAllRolesAsync();
-        Task<RoleWithPermissionDto> GetRoleByIdAsync(int roleId);
+        Task<RoleWithPermissionDto?> GetRoleByIdAsync(int roleId);
         Task<(bool Success, string? ErrorMessage)> AssignPermissionToRoleAsync(int roleId, int PermissionId);
         Task<(bool Success, string? ErrorMessage)> RemovePermissionFromRoleAsync(int roleId, int PermissionId);
-        Task<UserPermissionDto> GetUserPermissionAsync(int userId);
+        Task<UserPermissionDto?> GetUserPermissionAsync(int userId);
         Task<(bool Success, string? ErrorMessage)> AssignPermissionToUserAsync(int userId, AssingUserPermissionDto dto);
         Task<(bool Success, string? ErrorMessage)> RemovePermissionFromUserAsync(int userId, int permissionId);
         Task<(bool Success, string? ErrorMessage)> UpdateUserRoleAsync(int userId, int roleId);
@@ -23,7 +23,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Services
         Task<(bool Success, PermissionDto? Result, string? ErrorMessage)> CreatePermissionAsync(SavePermissionDto dto);
         Task<(bool Success, string? ErrorMessage)> UpdatePermissionAsync(SavePermissionDto dto);
         Task<(bool Success, string? ErrorMessage)> DeletePermissionAsync(int id);
-        Task<(bool Succes, RoleWithPermissionDto? Result, string? ErrorMessage)> CreateRoleAsync(CreateRolDto dto);
+        Task<(bool Success, RoleWithPermissionDto? Result, string? ErrorMessage)> CreateRoleAsync(CreateRolDto dto);
         Task<IReadOnlyList<UserListItemDto>> GetAllUserAsync();
 
 

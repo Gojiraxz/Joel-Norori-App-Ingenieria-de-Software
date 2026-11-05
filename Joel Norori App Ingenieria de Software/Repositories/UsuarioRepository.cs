@@ -18,7 +18,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
             .ThenInclude(p => p.UsuarioPermisos)
             .ThenInclude(up => up.Permiso);
 
-        public async Task<bool> AssingPermissionToUsuarioAsync(int usuarioId, int permissionId)
+        public async Task<bool> AssingPermissionToUsuarioAsync(int usuarioId, int permissionId, bool isGranted)
         {
             var userPermission = await context.usuarioPermisos
                 .FirstOrDefaultAsync(up => up.usuarioId == usuarioId && up.PermisoId == permissionId);

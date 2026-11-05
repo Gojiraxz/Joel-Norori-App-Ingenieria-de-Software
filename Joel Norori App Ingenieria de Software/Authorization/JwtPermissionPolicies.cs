@@ -1,41 +1,48 @@
-﻿using Joel_Norori_App_Ingenieria_de_Software.Models;
+﻿using JoelNororiAppIngenieriaDeSoftware.Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
-using System;
-
+using System.Threading.Tasks;
 
 namespace Joel_Norori_App_Ingenieria_de_Software.Authorization
 {
-    public class JwtPermissionPolicies
+    public class PermissionRequirement(string permission)
+        : IAuthorizationRequirement
     {
-        public class PermisoRequirement : IAuthorizationRequirement
-        {
-            public string Permiso { get; } = Permiso;
-        }
+        public string Permission { get; } = permission;
+    }
 
-        public class PermisoRequirementHandler : AuthorizationHandler<PermisoRequirement>
+    public class PermissionAuthorizationHandler
+        : AuthorizationHandler<PermissionRequirement>
+    {
+        protected override Task HandleRequirementAsync(
+            AuthorizationHandlerContext context,
+            PermissionRequirement requirement)
         {
-            protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, PermisoRequirement requirement)
+            if (context.User.HasPermiso(requirement.Permission))
             {
-                if (context.User.HasClaim(c => c.Type == "Permiso" && c.Value == requirement.Permiso))
-                {
-                    context.Succeed(requirement);
-                }
-                return Task.CompletedTask;
+                context.Succeed(requirement);
             }
+
+            return Task.CompletedTask;
         }
     }
-    public class PermisoPolicyProvider(IOptions<AuthorizationOptions> options) : DefaultAuthorizationPolicyProvider(options)
-    {
-       public override async Task<AuthorizationPolicy?> GetPolicyAsync(string policyName)
-       {
-           var policy = await base.GetPolicyAsync(policyName);
-           if (policy is not null)
-                return policy;
-            return new AuthorizationPolicyBuilder()
-                 .AddRequirements(new JwtPermissionPolicies.PermisoRequirement(policyName))
-                 .Build();
 
+    public class PermissionPolicyProvider(
+        IOptions<AuthorizationOptions> options)
+        : DefaultAuthorizationPolicyProvider(options)
+    {
+        public override async Task<AuthorizationPolicy?> GetPolicyAsync(
+            string policyName)
+        {
+            var policy = await base.GetPolicyAsync(policyName);
+
+            if (policy is not null)
+                return policy;
+
+            return new AuthorizationPolicyBuilder()
+                .AddRequirements(
+                    new PermissionRequirement(policyName))
+                .Build();
         }
     }
 }

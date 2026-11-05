@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Joel_Norori_App_Ingenieria_de_Software.DTOS
 {
-    public class ForgotPasswordDto
+    public class ForgotPasswordRequestDto
     {
         public string Email { get; set; } = null!;
         

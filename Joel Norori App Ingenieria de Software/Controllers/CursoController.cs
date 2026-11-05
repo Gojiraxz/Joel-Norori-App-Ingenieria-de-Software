@@ -9,7 +9,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Controllers
     public class CursoController(ICursoService _cursoService) : Controller
     {
         [Authorize(Policy = "curso.ver")]
-        public async Task<IActionResult> GetData(DatoaTablesRequestDto request)
+        public async Task<IActionResult> GetData([FromForm] DatoaTablesRequestDto request)
         {
             var result= await _cursoService.GetPagedAsync(request);
             return Ok(result);
@@ -38,7 +38,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Controllers
 
         [Authorize(Policy = "curso.crear")]
         [HttpPost]
-        public async  Task<IActionResult> Create (SaveCursoDto dto)
+        public async  Task<IActionResult> Create ([FromBody] SaveCursoDto dto)
         {
             if(!ModelState.IsValid)
                 return BadRequest(new { succes = false, message = "Error en los datos" });
@@ -51,7 +51,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Controllers
 
         [Authorize(Policy = "curso.actualizar")]
         [HttpPost]
-        public async Task<IActionResult> Update (SaveCursoDto dto)
+        public async Task<IActionResult> Update ([FromBody] SaveCursoDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new { succes = false, message = "Error en los datos" });

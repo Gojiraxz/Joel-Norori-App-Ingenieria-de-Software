@@ -15,6 +15,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<UsuarioPermiso>().HasKey(up => new { up.usuarioId, up.PermisoId });
             modelBuilder.Entity<RolePermiso>().HasKey(rp => new { rp.rolId, rp.permisoId });
 
             modelBuilder.Entity<RolePermiso>()

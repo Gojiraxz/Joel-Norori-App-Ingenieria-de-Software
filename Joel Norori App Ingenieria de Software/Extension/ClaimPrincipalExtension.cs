@@ -1,10 +1,10 @@
-﻿
+﻿using Joel_Norori_App_Ingenieria_de_Software;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 
-namespace JoelNororiAppIngenieriaDeSoftware.Extension
+namespace Joel_Norori_App_Ingenieria_de_Software.Extension
 {
     public static class ClaimPrincipalExtension
     {

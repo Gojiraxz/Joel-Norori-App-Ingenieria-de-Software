@@ -1,0 +1,81 @@
+﻿@using Joel_Norori_App_Ingenieria_de_Software.DTOS
+@using Joel_Norori_App_Ingenieria_de_Software.Extension
+@{
+	ViewData["Title"] = "Curso";
+	var curso = ViewBag.Cursos as IReadOnlyList<Joel_Norori_App_Ingenieria_de_Software.DTOS.CursoTableDto> ?? [];
+
+}
+<div class="d-flex justify-content-between align-items-lg-center mb-4">
+	<div>
+		<h1 class="h3 mb-1">Curso</h1>
+		<p class="text-muted mb-0">Gestion de datos con DataTable</p>
+	</div>
+	@if (User.HasPermiso("curso.crear"))
+	{
+		<button type="button" class="btn btn-success btn-group-sm" id="btnNuevoCurso">
+			<i class="fa-solid fla-plus me-1">Nuevo Curso</i>
+		</button>
+	}
+</div
+
+<div class="card admin-card">
+	<div class="card-body"
+		<table id="cursoTable" class="talbe table-striped table-hover w-100">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Descripcion</th>
+					<th>Estudiantes</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+</div>
+
+<div class="modal fade" id="cursoModal" tabindex="-1">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="cursoModalTitle">Curso</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+			</div>
+			<form id="cursoForm" novalidate>
+				<div class="modal-body">
+					<input type="hidden" id="cursoId" />
+					<div class="mb-3">
+						<label class="form-label" for="cursoNombre">Nombre</label>
+						<input type="text" id="cursoNombre" name="cursoNombre" class="form-control" maxlength="100" />
+					</div>
+					<div class="mb-3">
+						<label class="form-label" for="cursoDescripcion">Descripcion</label>
+						<input type="text" id="cursoDescripcion" class="form-control" maxlength="100" />
+					</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" dat-bs-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-primary" id="btnGuardarCurso">Guardar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	@section Styles {
+
+		<link rel="stylesheet" href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" />
+
+	}
+
+	@section Scripts {
+		<script src="https://cdn.datatables.net/1.13.8/js/jquery.dataTables.min.js"></script>
+		<script src="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.js"></script>
+		<script src="https://unpkg.com/just-validate@4.3.0/dist/just-validate.production.min.js"</script>
+		window.cursoConfig = {
+		canUpdate: @User.HasPermiso("curso.actualizar").ToString().ToLower(),
+		canDelete: @User.HasPermiso("curso.borrar").ToString().ToLower()
+		};
+	</script>
+	<script src="~/js/curso.js" asp-append-version="true"></script>
+}

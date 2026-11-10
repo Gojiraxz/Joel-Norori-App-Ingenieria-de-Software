@@ -8,6 +8,12 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Controllers
 {
     public class CursoController(ICursoService _cursoService) : Controller
     {
+        [Authorize(Policy ="curso.ver")]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
         [Authorize(Policy = "curso.ver")]
         public async Task<IActionResult> GetData([FromForm] DatoaTablesRequestDto request)
         {

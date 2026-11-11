@@ -1,4 +1,4 @@
-﻿using JoelNororiAppIngenieriaDeSoftware.Extension;
+﻿using Joel_Norori_App_Ingenieria_de_Software.Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;

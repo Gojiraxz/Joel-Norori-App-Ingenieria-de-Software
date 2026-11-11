@@ -5,7 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
-namespace AuthenticationApp.Middleware
+namespace Joel_Norori_App_Ingenieria_de_Software.Middleware
 {
     public class JwtRefreshMiddleware(
         RequestDelegate next,

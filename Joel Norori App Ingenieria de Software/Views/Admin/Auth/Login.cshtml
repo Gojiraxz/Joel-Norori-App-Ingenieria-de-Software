@@ -1,0 +1,135 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Autenticacioon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
+    <link href="~/css/login.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="overlay">
+        <div class="popup-container">
+            <main>
+                <div class="form-container">
+                    <div id="loginForm" class="form active">
+                        <h1>Bienvenido</h1>
+                        <p class="subtitle">Inicia sesion para continuar</p>
+
+                        <form id="signupForm">
+                            <div class="input-group">
+                                <i class="fa-regular fa-envelope input-icon" aria-hidden="true"></i>
+                                <input type="email" id="email" placeholder="Your Email" required>
+                            </div>
+
+                            <div class="input-group">
+                                <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                                <input type="password" id="password" placeholder="Your Password" required>
+                            </div>
+
+                            <div class="remember-forgot">
+                                <a href="#" class="forgot-link" data-form="forgotForm">Olvidaste contraseña?</a>
+                            </div>
+
+                            <button type="submit" class="signup-btn">Iniciar sesioon</button>
+
+                            <p class="login-link">
+                                No tienes cuenta? <a href="#" class="switch-form" data-form="registerForm">Registrarse</a>
+                            </p>
+                        </form>
+                    </div>
+
+                    <div id="registerForm" class="form">
+                        <h1>Create Account</h1>
+                        <p class="subtitle">Registrate para comenzar</p>
+
+                        <form id="registerFormElement">
+                            <div class="input-group">
+                                <i class="fa-regular fa-user input-icon" aria-hidden="true"></i>
+                                <input type="text" id="UserName" placeholder="Your Name" required>
+                            </div>
+
+                            <div class="input-group">
+                                <i class="fa-regular fa-envelope input-icon" aria-hidden="true"></i>
+                                <input type="email" id="registerEmail" placeholder="Your Email" required>
+                            </div>
+
+                            <div class="input-group">
+                                <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                                <input type="password" id="registerPassword" placeholder="Create Password" required>
+                            </div>
+                           
+                            <div class="input-group">
+                                <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                            </div>
+
+                            <button type="submit" class="signup-btn">Crear cuenta</button>
+
+                            <p class="login-link">
+                                Ya tienes una cuenta? <a href="#" class="switch-form" data-form="loginForm">Inicia sesion</a>
+                            </p>
+                        </form>
+                    </div>
+
+                    <div id="forgotForm" class="form">
+                        <h1>Resetear Contraseña</h1>
+                        <p class="subtitle">Ingresa tu contraseña</p>
+
+                        <form id="resetPasswordForm">
+                            <div class="input-group">
+                                <i class="fa-regular fa-envelope input-icon" aria-hidden="true"></i>
+                                <input type="email" id="resetEmail" placeholder="Your Email" required>
+                            </div>
+
+                            <button type="submit" class="signup-btn">Mandar link de reseteo</button>
+
+                            <p class="login-link">
+                                Recuerdas tu contraseña? <a href="#" class="switch-form" data-form="loginForm">Inicia session</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/just-validate@4.2.0/dist/just-validate.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (TempData["Success"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '@TempData["Success"]',
+                toast: true,
+                position: 'top-end',
+                timer: 3000,
+                showConfirmButton: false
+            });
+        </script>
+    }
+    else if (TempData["Error"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '@TempData["Error"]',
+                toast: true,
+                position: 'top-end',
+                timer: 4000,
+                showConfirmButton: false
+            });
+        </script>
+    }
+    <script src="~/js/login.js"></script>
+</body>
+</html>

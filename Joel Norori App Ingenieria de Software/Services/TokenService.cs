@@ -1,7 +1,7 @@
 ﻿using Joel_Norori_App_Ingenieria_de_Software.Helpers;
 using Joel_Norori_App_Ingenieria_de_Software.Models;
-using JoelNororiAppIngenieriaDeSoftware.Extension;
-using JoelNororiAppIngenieriaDeSoftware.Models.Settings;
+using Joel_Norori_App_Ingenieria_de_Software.Extension;
+using Joel_Norori_App_Ingenieria_de_Software.Models.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -11,6 +11,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
 
 namespace Joel_Norori_App_Ingenieria_de_Software.Services
 {
@@ -49,12 +50,12 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Services
 
         public string GeneratePasswordResetToken()
         {
-            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         }
 
         public string GenerateRefreshToken()
         {
-            return Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+            return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
         }
     }
 }

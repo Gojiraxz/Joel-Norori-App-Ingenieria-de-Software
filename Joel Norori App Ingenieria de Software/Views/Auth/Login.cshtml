@@ -62,7 +62,7 @@
                                 <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
                                 <input type="password" id="registerPassword" placeholder="Create Password" required>
                             </div>
-                           
+
                             <div class="input-group">
                                 <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
                                 <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
@@ -105,29 +105,29 @@
     @if (TempData["Success"] != null)
     {
         <script>
-            Swal.fire({
-                icon: 'success',
-                title: '¡Éxito!',
-                text: '@TempData["Success"]',
-                toast: true,
-                position: 'top-end',
-                timer: 3000,
-                showConfirmButton: false
-            });
+                Swal.fire({
+                    icon: 'success',
+                    title: '¡Éxito!',
+                    text: '@TempData["Success"]',
+                    toast: true,
+                    position: 'top-end',
+                    timer: 3000,
+                    showConfirmButton: false
+                });
         </script>
     }
     else if (TempData["Error"] != null)
     {
         <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '@TempData["Error"]',
-                toast: true,
-                position: 'top-end',
-                timer: 4000,
-                showConfirmButton: false
-            });
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: '@TempData["Error"]',
+                    toast: true,
+                    position: 'top-end',
+                    timer: 4000,
+                    showConfirmButton: false
+                });
         </script>
     }
     <script src="~/js/login.js"></script>

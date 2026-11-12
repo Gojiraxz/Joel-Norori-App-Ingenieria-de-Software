@@ -11,8 +11,7 @@ using Joel_Norori_App_Ingenieria_de_Software.Middleware;
 using Joel_Norori_App_Ingenieria_de_Software.Models.Settings;
 using Joel_Norori_App_Ingenieria_de_Software.Repositories;
 using Joel_Norori_App_Ingenieria_de_Software.Services;
-using Joel_Norori_App_Ingenieria_de_Software.Authorization.JwtPermissionPolicies;
-using Joel_Norori_App_Ingenieria_de_Software.Authorization;
+using static Joel_Norori_App_Ingenieria_de_Software.Authorization.JwtPermissionPolicies;
 using WebApplication1.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,7 +46,7 @@ builder.Services.AddScoped<IEmailService, EmailService>();
 
 //=======================DBContext=========================
 builder.Services.AddDbContext<AppDBContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("ProyectoAuth")));
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -165,8 +164,8 @@ app.UseStatusCodePages(async context =>
 });
 app.UseRouting();
 app.UseSession();
-app.UseMiddleware<JwtRefreshMiddleware>();
 app.UseAuthentication();
+app.UseMiddleware<JwtRefreshMiddleware>();
 app.UseAuthorization();
 
 app.MapStaticAssets();

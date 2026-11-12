@@ -15,7 +15,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
             context.usuarios.Include(u => u.Role)
             .ThenInclude(r => r.rolePermisos)
             .ThenInclude(rp => rp.Permiso)
-            .ThenInclude(p => p.UsuarioPermisos)
+            .Include(p => p.usuarioPermisos)
             .ThenInclude(up => up.Permiso);
 
         public async Task<bool> AssingPermissionToUsuarioAsync(int usuarioId, int permissionId, bool isGranted)
@@ -111,7 +111,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
 
         public bool ValidatePassword(Usuario usuario, string password)
         {
-            return BCrypt.Net.BCrypt.Verify(password, usuario.Password);
+            return BCrypt.Net.BCrypt.EnhancedVerify(password, usuario.Password);
         }
     }
 }

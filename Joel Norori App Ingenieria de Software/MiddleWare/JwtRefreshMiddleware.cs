@@ -1,5 +1,5 @@
 ﻿using Joel_Norori_App_Ingenieria_de_Software.Services;
-using JoelNororiAppIngenieriaDeSoftware.Models.Settings;
+using Joel_Norori_App_Ingenieria_de_Software.Models.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

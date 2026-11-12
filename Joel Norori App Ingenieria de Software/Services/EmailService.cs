@@ -1,4 +1,4 @@
-﻿using JoelNororiAppIngenieriaDeSoftware.Models.Settings;
+﻿using Joel_Norori_App_Ingenieria_de_Software.Models.Settings;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;

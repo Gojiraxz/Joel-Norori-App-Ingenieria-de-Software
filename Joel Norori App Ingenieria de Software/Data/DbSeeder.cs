@@ -39,7 +39,7 @@ namespace WebApplication1.Data
         }
         private static async Task SeedPermissionAsync(AppDBContext context)
         {
-            if (!await context.permisos.AnyAsync())
+            if (await context.permisos.AnyAsync())
                 return;
             context.permisos.AddRange(
                 new Permiso { Name = "estudiante.ver", DescriptionS = "Ver estudiante" },

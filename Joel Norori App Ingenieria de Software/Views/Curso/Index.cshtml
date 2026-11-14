@@ -32,8 +32,6 @@
                     <th>Acciones</th>
                 </tr>
             </thead>
-            <tbody>
-            </tbody>
         </table>
     </div>
 </div>
@@ -112,7 +110,7 @@
         window.cursoConfig = {
             canCreate: @User.HasPermiso("curso.crear").ToString().ToLower(),
             canUpdate: @User.HasPermiso("curso.actualizar").ToString().ToLower(),
-            canDelete: @User.HasPermiso("curso.eliminar").ToString().ToLower()
+            canDelete: @User.HasPermiso("curso.borrar").ToString().ToLower()
                 };
     </script>
 

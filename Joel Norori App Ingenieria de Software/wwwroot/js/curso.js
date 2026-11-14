@@ -18,8 +18,6 @@
             { rule: "maxLength", value: 100, errorMessage: "Máximo 100 caracteres" }
         ])
         .addField("#cursoDescripcion", [
-            { rule: "required", errorMessage: "La descripcion es obligatorio" },
-            { rule: "minLength", value: 2, errorMessage: "Mínimo 2 caracteres" },
             { rule: "maxLength", value: 100, errorMessage: "Máximo 100 caracteres" }
         ]);
        
@@ -37,14 +35,15 @@
         columns: [
             { data: "id" },
             { data: "nombre" },
-            { data: "descripcion" }, 
+            { data: "descripcion", render: d => d || '-' },
+            { data: "totalEstudiantes"},
             {
                 data: null,
                 orderable: false,
                 searchable: false,
 
                 render: function (data) {
-                    let buttons = "";
+                    let buttons = '';
 
                     if (config.canUpdate) {
                         buttons += `
@@ -77,8 +76,8 @@
     // Limpiar formulario
     function clearForm() {
         $("#cursoId").val("");
-        $("#CursoNombre").val("");
-        $("#CursoDescripcion").val("");
+        $("#cursoNombre").val("");
+        $("#cursoDescripcion").val("");
   
         cursoValidator.refresh();
     }
@@ -89,27 +88,28 @@
 
         clearForm();
 
-        $("#cursoModalLabel").text("Nuevo curso");
+        $("#cursoModalTitle").text("Nuevo curso");
         modal.show();
     });
-    $('#cursoTable').on('click', 'btn-edit', async function () {
+    $('#cursoTable').on('click', '.btn-edit', async function () {
         const id = $(this).data('id');
         try {
-            const response = await axios.post(`/Curso/GetById=${id}`);
+            const response = await axios.get(`/Curso/GetById?Id=${id}`);
             isEdit = true;
             $('#cursoId').val(response.data.id);
-            $('#cursoNombre').val(response.data.id);
-            $('#cursoDescripcion').val(response.data.id);
+            $('#cursoNombre').val(response.data.nombre);
+            $('#cursoDescripcion').val(response.data.descripcion);
             
             $('#cursoModalTitle').text("editar curso");
             cursoValidator.refresh();
+            modal.show();
 
         } catch {
             Swal.fire('Error', 'No se puede cargar el curso', 'error');
         }
 
     });
-    $("#cursoTable").on('click', 'btn-delete', async function () {
+    $("#cursoTable").on('click', '.btn-delete', async function () {
         const id = $(this).data('id');
         const nombre = $(this).data('nombre');
 
@@ -128,7 +128,7 @@
             const response = await axios.post(`/Curso/Delete?id=${id}`);
             if (response.data.success) {
                 table.ajax.reload();
-                Swal.fire('Eliminado', reponse.data.message, 'success');
+                Swal.fire('Eliminado', response.data.message, 'success');
             }
         }
         catch (error) {
@@ -137,7 +137,7 @@
         }
     });
 
-    cursoValidator.onSucces(async (event) => {
+    cursoValidator.onSuccess(async (event) => {
         event.preventDefault();
 
         const payload = {
@@ -150,13 +150,13 @@
             const response = isEdit
                 ? await axios.post(`/Curso/Update`, payload)
                 : await axios.post(`/Curso/Create`, payload);
-            if (reponse.data.success) {
+            if (response.data.success) {
                 modal.hide();
                 table.ajax.reload();
                 Swal.fire({
-                    title: 'listo',
+                    title: 'Listo',
                     text: response.data.message,
-                    icon: 'succes',
+                    icon: 'success',
                     timer: 2000,
                     showConfirmButton: false
                 });
@@ -164,6 +164,7 @@
             }
 
         } catch (error) {
+            
             const message = error.reponse?.data?.message || 'No se pudo guardar';
             Swal.fire('Error', message, 'error');
         }

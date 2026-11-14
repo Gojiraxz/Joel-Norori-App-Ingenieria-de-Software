@@ -98,31 +98,29 @@ $(function () {
     // Nuevo estudiante
     $("#btnNuevoEstudiante").on("click", function () {
         isEdit = false;
-
         clearForm();
-
-        $("#estudianteModalLabel").text("Nuevo estudiante");
+        $("#estudianteModalTitle").text("Nuevo estudiante");
         modal.show();
     });
-    $('#estudiantTable').on('click', 'btn-edit', async function () {
+    $('#estudiantTable').on('click', '.btn-edit', async function () {
         const id = $(this).data('id');
         try {
             const response = await axios.get(`/Estudiante/GetById=${id}`);
             isEdit = true;
             $('#estudianteId').val(response.data.id);
-            $('#estudianteNombre').val(response.data.id);
-            $('#estudianteApellido').val(response.data.id);
-            $('#estudianteEmail').val(response.data.id);
-            $('#estudianteCursoId').val(response.data.id);
+            $('#estudianteNombre').val(response.data.nombre);
+            $('#estudianteApellido').val(response.data.apellido);
+            $('#estudianteEmail').val(response.data.email);
+            $('#estudianteCursoId').val(response.data.cursoId);
             $('#estudianteModalTitle').text("editar estudiante");
             estudianteValidator.refresh();
-
+            modal.show();
         } catch {
             Swal.fire('Error', 'No se puede cargar el estudiante', 'error');
         }
 
     });
-    $("#estudianteTable").on('click', 'btn-delete', async function () {
+    $("#estudianteTable").on('click', '.btn-delete', async function () {
         const id = $(this).data('id');
         const nombre = $(this).data('nombre');
 
@@ -141,7 +139,7 @@ $(function () {
             const response = await axios.post(`/Estudiante/Delete?id=${id}`);
             if (response.data.success) {
                 table.ajax.reload();
-                Swal.fire('Eliminado', reponse.data.message, 'success');
+                Swal.fire('Eliminado', response.data.message, 'success');
             }
         }
         catch (error) {
@@ -150,27 +148,27 @@ $(function () {
         }
     });
 
-    estudianteValidator.onSucces(async (event) => {
+    estudianteValidator.onSuccess(async (event) => {
         event.preventDefault();
 
         const payload = {
             id: $('#estudianteId').val() ? parseInt($('#estudianteId').val()) : null,
             nombre: $('#estudianteNombre').val().trim(),
             apellido: $('#estudianteApellido').val().trim(),
-            email: $('#estudianteEmail'), val().trim(),
+            email: $('#estudianteEmail'). val().trim(),
             cursoId: parseInt($('#estudianteCursoId').val())
         };
         try {
             const response = isEdit
                 ? await axios.post(`/Estudiante/Update`, payload)
                 : await axios.post(`/Estudiante/Create`, payload);
-            if (reponse.data.success) {
+            if (response.data.success) {
                 modal.hide();
                 table.ajax.reload();
                 Swal.fire({
                     title: 'listo',
                     text: response.data.message,
-                    icon: 'succes',
+                    icon: 'success',
                     timer: 2000,
                     showConfirmButton: false
                 });
@@ -178,7 +176,7 @@ $(function () {
               }
 
          } catch (error) { 
-              const message = error.reponse?.data?.message || 'No se pudo guardar';
+              const message = error.response?.data?.message || 'No se pudo guardar';
               Swal.fire('Error', message, 'error'); 
          }
     })

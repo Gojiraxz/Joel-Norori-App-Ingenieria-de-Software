@@ -109,7 +109,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
             {
                 Draw = request.Draw,
                 RecordsTotal = recordsTotal,
-                RecordsTotalFiltered = recordsFiltered,
+                RecordsFiltered = recordsFiltered,
                 Data = data
             };
         }

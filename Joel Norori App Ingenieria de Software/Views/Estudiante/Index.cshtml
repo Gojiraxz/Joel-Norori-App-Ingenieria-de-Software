@@ -1,11 +1,10 @@
-﻿
-@using Joel_Norori_App_Ingenieria_de_Software.DTOS
+﻿@using Joel_Norori_App_Ingenieria_de_Software.DTOS
 @using Joel_Norori_App_Ingenieria_de_Software.Extension
 
 @{
     ViewData["Title"] = "Estudiantes";
 
-    var cursos = ViewBag.Cursos as IReadOnlyList<CursoTableDto> ?? [];
+    var cursos = ViewBag.Cursos as IReadOnlyList<Joel_Norori_App_Ingenieria_de_Software.DTOS.CursoTableDto> ?? [];
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">

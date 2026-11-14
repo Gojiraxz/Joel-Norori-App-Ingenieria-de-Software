@@ -59,7 +59,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
 
         public async Task<Usuario?> GetUsuarioByEmail(string email)
         {
-            return await context.usuarios.FirstOrDefaultAsync(u => u.Email == email);
+            return await UserWithPermission.FirstOrDefaultAsync(u => u.Email == email);
         }
 
         public async Task<Usuario?> GetUsuarioByIdWithPermissionAsync(int id)
@@ -69,7 +69,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
 
         public async Task<Usuario?> GetUsuarioByRefreshTokenAsync(string refreshToken)
         {
-            return await context.usuarios.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
+            return await UserWithPermission.FirstOrDefaultAsync(u => u.RefreshToken == refreshToken);
         }
 
         public async Task<Usuario?> GetUsuarioByUserName(string userName)

@@ -6,6 +6,7 @@ using Joel_Norori_App_Ingenieria_de_Software.Services;
 using Joel_Norori_App_Ingenieria_de_Software.Extension;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Formats.Asn1;
 using System.Security.Claims;
 
@@ -118,10 +119,10 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Controllers
             {
                 var roles = await _rolePermissionService.GetAllRolesAsync();
                 ViewBag.CreateError = errorMessage;
-                return View("Rol", roles);    
+                return View("Roles", roles);    
             }
             TempData["Success"] = $"Rol '{dto.Name}' Creado Correctamente";
-            return RedirectToAction(nameof(Rol));
+            return RedirectToAction(nameof(Roles));
 
         }
         [Authorize(Policy ="rol.asignar")]

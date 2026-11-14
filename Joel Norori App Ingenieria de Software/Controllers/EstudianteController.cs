@@ -6,11 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoAuthJwt.Controllers
 {
-    public class EstudianteController(IEstudianteService _estudianteService) : Controller
+    public class EstudianteController(IEstudianteService _estudianteService, ICursoService _cursoService) : Controller
     {
         [Authorize(Policy = "estudiante.ver")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.Cursos = await _cursoService.GetAllAsync();
             return View();
         }
 
@@ -34,7 +35,7 @@ namespace ProyectoAuthJwt.Controllers
 
         [Authorize(Policy = "estudiante.crear")]
         [HttpPost]
-        public async Task<IActionResult> Create(SaveEstudianteDto dto)
+        public async Task<IActionResult> Create([FromBody] SaveEstudianteDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new { success = false, message = "Error en los datos a guardar" });
@@ -46,7 +47,7 @@ namespace ProyectoAuthJwt.Controllers
 
         [Authorize(Policy = "estudiante.actualizar")]
         [HttpPost]
-        public async Task<IActionResult> Update(SaveEstudianteDto dto)
+        public async Task<IActionResult> Update([FromBody]SaveEstudianteDto dto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new { success = false, message = "Error en los datos a guardar" });

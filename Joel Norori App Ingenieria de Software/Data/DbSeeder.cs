@@ -57,6 +57,8 @@ namespace WebApplication1.Data
                 new Permiso { Name = "usuario.asignar", DescriptionS = "Asignar permisos a usuario" },
                 new Permiso { Name = "usuario.cambiar_rol", DescriptionS = "Cambiar rol de usuario" },
                 new Permiso { Name = "curso.ver", DescriptionS = "Ver cursos" },
+                new Permiso { Name = "curso.actualizar", DescriptionS = "actualizar cursos" },
+                new Permiso { Name = "curso.borrar", DescriptionS = "borrar cursos" },
                 new Permiso { Name = "curso.crear", DescriptionS = "Crear curso" });
             await context.SaveChangesAsync();
 

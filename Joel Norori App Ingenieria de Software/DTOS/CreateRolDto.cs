@@ -10,7 +10,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.DTOS
     public class CreateRolDto
     {
         [Required(ErrorMessage = "The name is required.")]
-        [MaxLength(150, ErrorMessage = "The name cannot exceed 150 characters.")]
+        [MaxLength(150, ErrorMessage = "El nombre no puede exceder los 150 caracteres.")]
         public string Name { get; set; } = string.Empty;
 
     }

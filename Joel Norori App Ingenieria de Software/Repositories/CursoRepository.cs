@@ -76,7 +76,7 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
             {
                 Draw = request.Draw,
                 RecordsTotal = recordsTotal,
-                RecordsTotalFiltered = recordsFiltered,
+                RecordsFiltered = recordsFiltered,
                 Data = data
             };
         }
@@ -88,8 +88,8 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Repositories
 
         public async Task<bool> HasAnyEstudianteAsync(int Id)
         {
-            return await context.cursos.AnyAsync
-                (c => c.Id ==Id);
+            return await context.estudiantes.AnyAsync
+                (c => c.CursoId ==Id);
         }
 
         public async Task<bool> NombreExisteAsync(string nombre, int? excluedeId)

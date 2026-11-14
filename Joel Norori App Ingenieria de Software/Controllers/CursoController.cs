@@ -38,8 +38,8 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Controllers
         {
             var (success, errormessage) = await _cursoService.DeleteAsync(id);
             return success ?
-                Ok(new { succes = true, message = "Curso Eliminado satisfactoriamente" })
-                : BadRequest(new { succes = false, message = errormessage });
+                Ok(new { success = true, message = "Curso Eliminado satisfactoriamente" })
+                : BadRequest(new { success = false, message = errormessage });
         }
 
         [Authorize(Policy = "curso.crear")]
@@ -47,12 +47,12 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Controllers
         public async  Task<IActionResult> Create ([FromBody] SaveCursoDto dto)
         {
             if(!ModelState.IsValid)
-                return BadRequest(new { succes = false, message = "Error en los datos" });
+                return BadRequest(new { success = false, message = "Error en los datos" });
                 
-            var (succes, errorMessage) = await _cursoService.CreateAsync(dto);
-            return succes ?
-               Ok(new { succes = true, message = "Curso Creado satisfactoriamente" })
-               : BadRequest(new { succes = false, errorMessage });
+            var (success, errorMessage) = await _cursoService.CreateAsync(dto);
+            return success ?
+               Ok(new { success = true, message = "Curso Creado satisfactoriamente" })
+               : BadRequest(new { success = false, errorMessage });
         }
 
         [Authorize(Policy = "curso.actualizar")]
@@ -60,13 +60,13 @@ namespace Joel_Norori_App_Ingenieria_de_Software.Controllers
         public async Task<IActionResult> Update ([FromBody] SaveCursoDto dto)
         {
             if (!ModelState.IsValid)
-                return BadRequest(new { succes = false, message = "Error en los datos" });
+                return BadRequest(new { success = false, message = "Error en los datos" });
               
 
-            var (succes, errorMessage) = await _cursoService.UpdateAync(dto);
-            return succes ?
-               Ok(new { succes = true, message = "Curso Actualizado satisfactoriamente" })
-               : BadRequest(new { succes = false, errorMessage });
+            var (success, errorMessage) = await _cursoService.UpdateAync(dto);
+            return success ?
+               Ok(new { success = true, message = "Curso Actualizado satisfactoriamente" })
+               : BadRequest(new { success = false, errorMessage });
         }
 
 

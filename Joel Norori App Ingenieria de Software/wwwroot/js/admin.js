@@ -35,7 +35,7 @@ document.querySelectorAll('.btn-toggle-permission').forEach(button => {
     });
 });
 
-const assignBtn = document.getElementById('btnAssignPermission');
+const assignBtn = document.getElementById('.btnAssignPermission');
 const permissionSelect = document.getElementById('permissionToAssign');
 if (assignBtn && permissionSelect) {
     assignBtn.addEventListener('click', async () => {
@@ -56,7 +56,7 @@ if (assignBtn && permissionSelect) {
         }
     });
 }
-const updateRoleBtn = document.getElementById('btnUpdateRole');
+const updateRoleBtn = document.getElementById('.btnUpdateRole');
 if (updateRoleBtn) {
     updateRoleBtn.addEventListener('click', async () => {
         const userId = updateRoleBtn.dataset.userId;
